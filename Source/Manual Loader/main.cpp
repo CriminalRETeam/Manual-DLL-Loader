@@ -1,22 +1,22 @@
 #include "Loader.h"
 
 //Function pointer
-using MessageFncPtr = void (*)();
+typedef void (*MessageFncPtr)();
 
 int main()
 {
-	const auto lpModule = MemoryLoader::LoadDLL((LPSTR)"test.dll");
-	if (lpModule == nullptr)
+	LPVOID lpModule = MemoryLoader::LoadDLL((LPSTR)"test.dll");
+	if (lpModule == NULL)
 		return -1;
 
-	auto MessageFnc = (MessageFncPtr)MemoryLoader::GetFunctionAddress((LPVOID)lpModule, (const LPSTR)"Message");
-	if (MessageFnc == nullptr)
+	MessageFncPtr MessageFnc = (MessageFncPtr)MemoryLoader::GetFunctionAddress((LPVOID)lpModule, (const LPSTR)"Message");
+	if (MessageFnc == NULL)
 		return -1;
 
 	MessageFnc();
 
 	MessageFnc = (MessageFncPtr)MemoryLoader::GetFunctionAddressByOrdinal((LPVOID)lpModule, 1);
-	if (MessageFnc == nullptr)
+	if (MessageFnc == NULL)
 		return -1;
 
 	MessageFnc();
