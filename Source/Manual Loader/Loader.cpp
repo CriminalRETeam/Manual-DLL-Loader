@@ -271,7 +271,9 @@ LPVOID MemoryLoader::LoadDLL(const LPSTR lpDLLPath, ILoaderCallBacks& callBacks)
 			}
 			else
 			{
-				const PIMAGE_IMPORT_BY_NAME lpData = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)lpAllocAddress + lpThunkData->u1.AddressOfData);
+
+				const PIMAGE_IMPORT_BY_NAME lpData = (PIMAGE_IMPORT_BY_NAME)((unsigned char*)lpAllocAddress + (unsigned int)lpThunkData->u1.AddressOfData);
+
 				unsigned long* functionAddress = (unsigned long*)callBacks.VGetProcAddress(hModule, (const char*)lpData->Name);
 				lpThunkData->u1.Function = functionAddress;
 				printf("[+]\tFunction %s\n", (LPSTR)lpData->Name);
@@ -298,7 +300,10 @@ LPVOID MemoryLoader::LoadDLL(const LPSTR lpDLLPath, ILoaderCallBacks& callBacks)
 		printf("[+] TLS callbacks executed (DLL_PROCESS_ATTACH).\n");
 	}
 
+
+	printf("[+] Look up main..\n");
 	const dllmain main = (dllmain)((DWORD_PTR)lpAllocAddress + lpImageNTHeader->OptionalHeader.AddressOfEntryPoint);
+	printf("[+] call main..\n");
 	const BOOL result = main((HINSTANCE)lpAllocAddress, DLL_PROCESS_ATTACH, NULL);
 	if (!result)
 	{
