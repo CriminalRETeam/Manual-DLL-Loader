@@ -325,7 +325,7 @@ LPVOID MemoryLoader::LoadDLL(const LPSTR lpDLLPath, ILoaderCallBacks& callBacks)
  *	\param lpFunctionName : name of the function.
  *	\return : address of the function if success else NULL.
  */
-LPVOID MemoryLoader::GetFunctionAddress(const LPVOID lpModule, const LPSTR lpFunctionName)
+LPVOID MemoryLoader::GetFunctionAddress(const LPVOID lpModule, const char* lpFunctionName)
 {
 	const PIMAGE_DOS_HEADER lpImageDOSHeader = (PIMAGE_DOS_HEADER)lpModule;
 	const PIMAGE_NT_HEADERS lpImageNTHeader = (PIMAGE_NT_HEADERS)((DWORD_PTR)lpImageDOSHeader + lpImageDOSHeader->e_lfanew);

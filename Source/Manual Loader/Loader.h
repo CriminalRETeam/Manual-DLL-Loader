@@ -41,7 +41,7 @@ class MemoryLoader
 {
 public:
 	static LPVOID LoadDLL(const LPSTR lpDLLPath, ILoaderCallBacks& callBacks = DefaultLoaderCallBacks());
-	static LPVOID GetFunctionAddress(const LPVOID lpModule, const LPSTR lpFunctionName);
+	static LPVOID GetFunctionAddress(const LPVOID lpModule, const char* lpFunctionName);
 	static LPVOID GetFunctionAddressByOrdinal(const LPVOID lpModule, const DWORD_PTR dOrdinal);
 	static BOOL FreeDLL(const LPVOID lpModule);
 
